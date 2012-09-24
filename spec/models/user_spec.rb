@@ -22,7 +22,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
 
   it { should be_valid }
@@ -109,7 +109,7 @@ describe User do
     end
   end
 
-describe "email address with mixed case" do
+  describe "email address with mixed case" do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
     it "should be saved as all lower-case" do
@@ -117,6 +117,11 @@ describe "email address with mixed case" do
       @user.save
       @user.reload.email.should == mixed_case_email.downcase
     end
+  end
+
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
   end
 
 end
